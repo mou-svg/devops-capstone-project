@@ -4,7 +4,7 @@
 [![Python 3.9](https://img.shields.io/badge/Python-3.9-green.svg)](https://shields.io/)
 
 This repository contains the starter code for the project in [**IBM-CD0285EN-SkillsNetwork DevOps Capstone Project**](https://www.coursera.org/learn/devops-capstone-project?specialization=devops-and-software-engineering) which is part of the [**IBM DevOps and Software Engineering Professional Certificate**](https://www.coursera.org/professional-certificates/devops-and-software-engineering)
-devops-capstone-project
+Project Name: devops-capstone-project
 You will create a GitHub repository and Kanban board to manage the project, build a user story template to write well-structured user stories, and populate your Product Backlog with all the stories needed to implement the Customer Accounts microservice. After completing your backlog, you will prepare a sprint plan by setting up sprints, estimating story points, assigning stories to the appropriate sprint, and building your Sprint Backlog.
 ## Usage
 
