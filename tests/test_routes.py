@@ -25,6 +25,7 @@ HTTPS_ENVIRON= {'wsgi.url_scheme': 'https'}
 #  T E S T   C A S E S
 ######################################################################
 class TestAccountService(TestCase):
+
     """Account Service Tests"""
 
     @classmethod
@@ -128,8 +129,7 @@ class TestAccountService(TestCase):
     # ADD YOUR TEST CASES HERE ...
     def test_read_an_account(self):
         account = self._create_accounts(1)[0]
-        
-        response =  self.client.get(
+        response = self.client.get(
              f"{BASE_URL}/{account.id}", content_type="application/json"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -137,7 +137,7 @@ class TestAccountService(TestCase):
         self.assertEqual(data["name"], account.name)
 
     def test_account_not_found(self):
-        response =  self.client.get(
+        response = self.client.get(
              f"{BASE_URL}/0"
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
@@ -153,13 +153,13 @@ class TestAccountService(TestCase):
     def test_delete_account(self):
         """It should Delete an Account"""
         account = self._create_accounts(1)[0]
-        response =  self.client.delete(
+        response = self.client.delete(
              f"{BASE_URL}/{account.id}"
-        ) 
+        )
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         # send a self.client.delete() request to the BASE_URL with an id of an account
         # assert that the resp.status_code is status.HTTP_204_NO_CONTENT
-        
+     
     def test_method_not_allowed(self):
         """It should not allow an illegal method call"""
         resp = self.client.delete(BASE_URL)
@@ -179,8 +179,8 @@ class TestAccountService(TestCase):
 		    'X-Content-Type-Options': 'nosniff',
 		    'Content-Security-Policy': 'default-src \'self\'; object-src \'none\'',
 		    'Referrer-Policy': 'strict-origin-when-cross-origin'
-		}
-	    for key, value in headers.items():
+        }
+        for key, value in headers.items():
 		    self.assertEqual(response.headers.get(key), value)
 
     def test_update_account(self):
