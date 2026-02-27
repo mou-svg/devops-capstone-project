@@ -25,6 +25,7 @@ HTTPS_ENVIRON= {'wsgi.url_scheme': 'https'}
 #  T E S T   C A S E S
 ######################################################################
 class TestAccountService(TestCase):
+
     """Account Service Tests"""
 
     @classmethod
@@ -128,8 +129,7 @@ class TestAccountService(TestCase):
     # ADD YOUR TEST CASES HERE ...
     def test_read_an_account(self):
         account = self._create_accounts(1)[0]
-        
-        response =  self.client.get(
+        response = self.client.get(
              f"{BASE_URL}/{account.id}", content_type="application/json"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -137,7 +137,7 @@ class TestAccountService(TestCase):
         self.assertEqual(data["name"], account.name)
 
     def test_account_not_found(self):
-        response =  self.client.get(
+        response = self.client.get(
              f"{BASE_URL}/0"
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
@@ -153,13 +153,13 @@ class TestAccountService(TestCase):
     def test_delete_account(self):
         """It should Delete an Account"""
         account = self._create_accounts(1)[0]
-        response =  self.client.delete(
+        response = self.client.delete(
              f"{BASE_URL}/{account.id}"
-        ) 
+        )
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         # send a self.client.delete() request to the BASE_URL with an id of an account
         # assert that the resp.status_code is status.HTTP_204_NO_CONTENT
-        
+     
     def test_method_not_allowed(self):
         """It should not allow an illegal method call"""
         resp = self.client.delete(BASE_URL)
@@ -171,17 +171,19 @@ class TestAccountService(TestCase):
         self.assertEqual(response.headers.get('Access-Control-Allow-Origin'), '*')
         
     def test_security_headers(self):
-	    """It should return security headers"""
-	    response = self.client.get('/', environ_overrides=HTTPS_ENVIRON)
-	    self.assertEqual(response.status_code, status.HTTP_200_OK)
-	    headers = {
-		    'X-Frame-Options': 'SAMEORIGIN',
-		    'X-Content-Type-Options': 'nosniff',
-		    'Content-Security-Policy': 'default-src \'self\'; object-src \'none\'',
-		    'Referrer-Policy': 'strict-origin-when-cross-origin'
-		}
-	    for key, value in headers.items():
-		    self.assertEqual(response.headers.get(key), value)
+        """It should return security headers"""
+        response = self.client.get('/', environ_overrides=HTTPS_ENVIRON)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        headers = {
+            'X-Frame-Options': 'SAMEORIGIN',
+            'X-Content-Type-Options': 'nosniff',
+            'Content-Security-Policy': "default-src 'self'; object-src 'none'",
+            'Referrer-Policy': 'strict-origin-when-cross-origin'
+        }
+
+        for key, value in headers.items():
+            self.assertEqual(response.headers.get(key), value)
 
     def test_update_account(self):
         """It should Update an existing Account"""
@@ -190,10 +192,9 @@ class TestAccountService(TestCase):
         test_account = AccountFactory()
         # send a self.client.post() request to the BASE_URL with a json payload of test_account.serialize()
         # assert that the resp.status_code is status.HTTP_201_CREATED
-        resp  = self.client.post(
+        resp = self.client.post(
             BASE_URL,
             json=test_account.serialize()
-            
         )
         self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
         # update the account
@@ -202,11 +203,10 @@ class TestAccountService(TestCase):
         # get the data from resp.get_json() as new_account
         # change new_account["name"] to something known
         # send a self.client.put() request to the BASE_URL with a json payload of new_account
-        resp = self.client.put(f"{BASE_URL}/{new_account['id']}", json =new_account)
+        resp = self.client.put(f"{BASE_URL}/{new_account['id']}", json=new_account)
         # assert that the resp.status_code is status.HTTP_200_OK
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         # get the data from resp.get_json() as updated_account
-        updated_account  = resp.get_json()
+        updated_account = resp.get_json()
         self.assertEqual(updated_account["name"], "something")
         # assert that the updated_account["name"] is whatever you changed it to
-    
