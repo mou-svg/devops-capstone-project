@@ -190,10 +190,9 @@ class TestAccountService(TestCase):
         test_account = AccountFactory()
         # send a self.client.post() request to the BASE_URL with a json payload of test_account.serialize()
         # assert that the resp.status_code is status.HTTP_201_CREATED
-        resp  = self.client.post(
+        resp = self.client.post(
             BASE_URL,
             json=test_account.serialize()
-        
         )
         self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
         # update the account
@@ -202,7 +201,7 @@ class TestAccountService(TestCase):
         # get the data from resp.get_json() as new_account
         # change new_account["name"] to something known
         # send a self.client.put() request to the BASE_URL with a json payload of new_account
-        resp = self.client.put(f"{BASE_URL}/{new_account['id']}", json = new_account)
+        resp = self.client.put(f"{BASE_URL}/{new_account['id']}", json=new_account)
         # assert that the resp.status_code is status.HTTP_200_OK
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         # get the data from resp.get_json() as updated_account
